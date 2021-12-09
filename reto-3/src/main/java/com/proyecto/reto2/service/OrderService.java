@@ -26,7 +26,6 @@ public class OrderService {
 
         //obtiene el maximo id existente en la coleccion
         Optional<Order> orderIdMaxima = orderRepository.lastUserId();
-
         //si el id de la orden que se recibe como parametro es nulo, entonces valida el maximo id existente en base de datos
         if (order.getId() == null) {
             //valida el maximo id generado, si no hay ninguno aun el primer id sera 1
@@ -36,7 +35,6 @@ public class OrderService {
             else
                 order.setId(orderIdMaxima.get().getId() + 1);
         }
-
         Optional<Order> e = orderRepository.getOrder(order.getId());
         if (e.isEmpty()) {
             return orderRepository.create(order);
@@ -69,5 +67,9 @@ public class OrderService {
             return true;
         }).orElse(false);
         return aBoolean;
+    }
+
+    public List<Order> findByZone(String zona){
+        return orderRepository.findByZone(zona);
     }
 }
