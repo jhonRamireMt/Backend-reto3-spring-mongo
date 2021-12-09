@@ -14,6 +14,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /* OBTENER USUARIO POR ID*/
+    public Optional<User> getUser(int id) {
+        return userRepository.getUser(id);
+    }
+
     /* Crear usuario nuevo*/
     public User createUser(User user){
         Optional<User> validarId = userRepository.findById(user.getId());

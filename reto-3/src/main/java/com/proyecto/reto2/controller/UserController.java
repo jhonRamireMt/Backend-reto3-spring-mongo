@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -15,6 +16,11 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/{id}")
+    public Optional<User> getUser(@PathVariable("id") int id) {
+        return userService.getUser(id);
+    }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)

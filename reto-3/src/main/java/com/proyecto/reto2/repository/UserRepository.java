@@ -14,6 +14,11 @@ public class UserRepository {
     @Autowired
     private MongoInterfaceRepository mongoInterfaceRepository;
 
+    /* BUSCAR POR CODIGO USUARIO*/
+    public Optional<User> getUser(int id) {
+        return mongoInterfaceRepository.findById(id);
+    }
+
 
     /* BUSCAR POR ID*/
     public Optional<User> findById(int id){
