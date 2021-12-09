@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface OrderCrudRepository extends MongoRepository<Order,Integer> {
 
     // RETORNA UNA LISTA DE ORDER DONDE EL SALESMAN COINCIDA CON LA ZONA BUSCADA
-    @Query("{'salesMan': ?0}")
+    @Query("{'salesMan.zone': ?0}")
     List<Order> findByZone(final String country);
 
     // RETORNA ORDENES POR EL ESTADO

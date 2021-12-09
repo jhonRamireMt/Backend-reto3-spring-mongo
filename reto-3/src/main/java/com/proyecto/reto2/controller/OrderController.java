@@ -46,7 +46,7 @@ public class OrderController {
     }
 
     @GetMapping("/zona/{zona}")
-    public List<Order> findByZone(@PathVariable String zona){
+    public List<Order> findByZone(@PathVariable("zona") String zona){
         return orderService.findByZone(zona);
     }
 }
