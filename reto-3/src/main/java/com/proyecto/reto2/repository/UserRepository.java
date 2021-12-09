@@ -12,47 +12,40 @@ import java.util.Optional;
 public class UserRepository {
 
     @Autowired
-    private MongoInterfaceRepository mongoInterfaceRepository;
+    private MongoInterfaceRepository userCrudRepository;
 
-    /* BUSCAR POR CODIGO USUARIO*/
+    public List<User> getAll() {
+        return (List<User>) userCrudRepository.findAll();
+    }
+
     public Optional<User> getUser(int id) {
-        return mongoInterfaceRepository.findById(id);
+        return userCrudRepository.findById(id);
     }
 
-
-    /* BUSCAR POR ID*/
-    public Optional<User> findById(int id){
-        return mongoInterfaceRepository.findById(id);
+    public User create(User user) {
+        return userCrudRepository.save(user);
     }
 
-    /*MOSTRAR TODOS LOS DOCUMENTOS DE LOS USUARIOS*/
-    public List<User> getAll(){
-       return mongoInterfaceRepository.findAll();
+    public void update(User user) {
+        userCrudRepository.save(user);
     }
 
-    /* ENCONTRAR UN USUARIO POR EAMIL - BOOLEAN*/
-    public boolean findByEmail(String email){
-        Optional<User> findUser = mongoInterfaceRepository.findByEmail(email);
-         if(findUser.isPresent()){
-             return true;
-         }
-         return false;
+    public void delete(User user) {
+        userCrudRepository.delete(user);
     }
 
-    /* BUSCAR POR USUARIO Y PASSWORD PARA VERIFICAR AUTENTICACION*/
-    public Optional<User> findByEmailAndPassword(String email, String password){
-        return mongoInterfaceRepository.findByEmailAndPassword(email,password);
+    public boolean emailExists(String email) {
+        Optional<User> usuario = userCrudRepository.findByEmail(email);
 
+        return !usuario.isEmpty();
     }
 
-    /*GUARDAR - ACTUALIZAR USUARIO*/
-    public User updateUser(User user){
-        return mongoInterfaceRepository.save(user);
+    public Optional<User> authenticateUser(String email, String password) {
+        return userCrudRepository.findByEmailAndPassword(email, password);
     }
 
-    /*BORRAR USUARIO*/
-    public void deleteUser(int id){
-         mongoInterfaceRepository.deleteById(id);
+    public Optional<User> lastUserId(){
+        return userCrudRepository.findTopByOrderByIdDesc();
     }
 
 

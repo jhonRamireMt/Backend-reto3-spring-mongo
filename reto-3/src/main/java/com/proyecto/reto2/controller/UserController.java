@@ -17,48 +17,41 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/all")
+    public List<User> getAll() {
+        return userService.getAll();
+    }
+
     @GetMapping("/{id}")
-    public Optional<User> getUser(@PathVariable("id") int id) {
+    public Optional <User> getUser(@PathVariable("id") int id) {
         return userService.getUser(id);
     }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody User user){
-       return userService.createUser(new User(userService.sumarID(),
-               user.getIdentification(),user.getName(),
-               user.getAddress(),user.getCellPhone(),
-               user.getEmail(),user.getPassword(),
-               user.getZone(),user.getType()));
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable int id){
-        userService.deleteUser(id);
-    }
-
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<User> getAll(){
-        return userService.getAll();
-    }
-
-    @GetMapping("/emailexist/{email}")
-    @ResponseStatus(HttpStatus.OK)
-    public boolean findByEmail(@PathVariable String email){
-        return userService.findByEmail(email);
-    }
-
-    @GetMapping("/{email}/{password}")
-    @ResponseStatus(HttpStatus.OK)
-    public User finByEmailAndPassword(@PathVariable String email, @PathVariable String password){
-        return userService.findByEmailAndPassword(email,password);
+    public User create(@RequestBody User user) {
+        return userService.create(user);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public User updateUser(@RequestBody User user){
-        return userService.updateUser(user);
+    public User update(@RequestBody User user) {
+        return userService.update(user);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public boolean delete(@PathVariable("id") int id) {
+        return userService.delete(id);
+    }
+
+    @GetMapping("/{email}/{password}")
+    public User authenticateUser(@PathVariable("email") String email, @PathVariable("password") String password) {
+        return userService.authenticateUser(email, password);
+    }
+
+    @GetMapping("/emailexist/{email}")
+    public boolean emailExists(@PathVariable("email") String email) {
+        return userService.emailExists(email);
     }
 }
