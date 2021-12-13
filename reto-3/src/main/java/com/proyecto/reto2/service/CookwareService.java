@@ -41,4 +41,8 @@ public class CookwareService {
             cookwareRepository.deleteProduct(reference);
         }
     }
+
+    public Optional<Cookware> findByReference(String ref){
+        return cookwareRepository.findByReference(ref);
+    }
 }

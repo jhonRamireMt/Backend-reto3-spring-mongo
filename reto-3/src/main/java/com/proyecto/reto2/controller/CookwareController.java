@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -38,5 +39,11 @@ public class CookwareController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCokkware(@PathVariable String reference){
         cookwareService.deleteProduct(reference);
+    }
+
+    @GetMapping("/{reference}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<Cookware> getByRef(@PathVariable String reference){
+        return cookwareService.findByReference(reference);
     }
 }
